@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VolleyVision</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app">
+
+    <header class="app-header">
+      <div>
+        <h1>VolleyVision</h1>
+        <p>Film in. Stats out.</p>
+      </div>
+
+      <div class="header-badge">
+        <span id="currentTimeDisplay">00:00</span>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-button active" data-tab="home">Home</button>
+      <button class="tab-button" data-tab="roster">Roster</button>
+      <button class="tab-button" data-tab="film">Film</button>
+      <button class="tab-button" data-tab="reports">Reports</button>
+      <button class="tab-button" data-tab="settings">Settings</button>
+    </nav>
+
+    <main>
+
+      <!-- HOME -->
+      <section id="home" class="tab-screen active">
+        <div class="hero-card">
+          <h2>Volleyball video stat tracking</h2>
+          <p>
+            Upload game film, tag stats while watching, assign each play to a player,
+            and build game reports without a clipboard.
+          </p>
+
+          <div class="quick-actions">
+            <button class="primary-btn" data-jump="film">Start Film Breakdown</button>
+            <button class="secondary-btn" data-jump="roster">Edit Roster</button>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span id="homePlayerCount">0</span>
+            <p>Players</p>
+          </div>
+
+          <div class="metric-card">
+            <span id="homeGameCount">0</span>
+            <p>Games</p>
+          </div>
+
+          <div class="metric-card">
+            <span id="homeStatCount">0</span>
+            <p>Stats Tagged</p>
+          </div>
+
+          <div class="metric-card">
+            <span id="homeKillCount">0</span>
+            <p>Kills</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>How it works</h3>
+          <ol class="steps-list">
+            <li>Add players to the roster.</li>
+            <li>Load a volleyball video.</li>
+            <li>Pick a player.</li>
+            <li>Tap the stat button while watching film.</li>
+            <li>Review totals in Reports.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ROSTER -->
+      <section id="roster" class="tab-screen">
+        <div class="card">
+          <h2>Team Roster</h2>
+
+          <div class="form-grid">
+            <input id="playerNameInput" type="text" placeholder="Player name" />
+            <input id="playerNumberInput" type="number" placeholder="Jersey #" />
+            <input id="playerPositionInput" type="text" placeholder="Position: OH, S, L, MB" />
+            <button id="addPlayerBtn" class="primary-btn">Add Player</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Players</h3>
+          <div id="playerList" class="list"></div>
+        </div>
+      </section>
+
+      <!-- FILM -->
+      <section id="film" class="tab-screen">
+        <div class="card">
+          <h2>Game Film</h2>
+
+          <div class="form-grid">
+            <input id="gameNameInput" type="text" placeholder="Opponent / tournament name" />
+            <input id="videoInput" type="file" accept="video/*" />
+          </div>
+
+          <p class="small-note">
+            Best setup: tripod, full court visible, clear jersey numbers, steady camera.
+          </p>
+        </div>
+
+        <div class="video-card">
+          <video id="gameVideo" controls playsinline></video>
+
+          <div class="video-controls">
+            <button id="back10Btn">-10</button>
+            <button id="back5Btn">-5</button>
+            <button id="playPauseBtn">Play/Pause</button>
+            <button id="forward5Btn">+5</button>
+            <button id="forward10Btn">+10</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>1. Pick Player</h3>
+          <div id="playerChips" class="chip-row"></div>
+          <p id="selectedPlayerText" class="small-note">No player selected.</p>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3>2. Tap Stat</h3>
+            <span id="filmTimestamp" class="time-pill">00:00</span>
+          </div>
+
+          <div class="stat-groups">
+
+            <div class="stat-group">
+              <h4>Serve</h4>
+              <div class="stat-buttons">
+                <button data-stat="SERVE_ATTEMPT">Serve</button>
+                <button data-stat="ACE">Ace</button>
+                <button data-stat="SERVE_ERROR">Serve Error</button>
+              </div>
+            </div>
+
+            <div class="stat-group">
+              <h4>Receive</h4>
+              <div class="stat-buttons">
+                <button data-stat="RECEPTION">Pass</button>
+                <button data-stat="RECEPTION_ERROR">Pass Error</button>
+              </div>
+            </div>
+
+            <div class="stat-group">
+              <h4>Set</h4>
+              <div class="stat-buttons">
+                <button data-stat="SET">Set</button>
+                <button data-stat="ASSIST">Assist</button>
+                <button data-stat="BALL_HANDLING_ERROR">Ball Handling Error</button>
+              </div>
+            </div>
+
+            <div class="stat-group">
+              <h4>Attack</h4>
+              <div class="stat-buttons">
+                <button data-stat="ATTACK">Attack</button>
+                <button data-stat="KILL">Kill</button>
+                <button data-stat="ATTACK_ERROR">Attack Error</button>
+              </div>
+            </div>
+
+            <div class="stat-group">
+              <h4>Defense</h4>
+              <div class="stat-buttons">
+                <button data-stat="DIG">Dig</button>
+                <button data-stat="DEFENSIVE_ERROR">Defensive Error</button>
+              </div>
+            </div>
+
+            <div class="stat-group">
+              <h4>Block</h4>
+              <div class="stat-buttons">
+                <button data-stat="SOLO_BLOCK">Solo Block</button>
+                <button data-stat="BLOCK_ASSIST">Block Assist</button>
+                <button data-stat="BLOCK_TOUCH">Block Touch</button>
+                <button data-stat="BLOCK_ERROR">Block Error</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3>Tag Log</h3>
+            <button id="undoBtn" class="secondary-btn">Undo Last</button>
+          </div>
+
+          <div id="eventLog" class="event-log"></div>
+        </div>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="reports" class="tab-screen">
+        <div class="card">
+          <h2>Reports</h2>
+          <p class="small-note">
+            These totals are saved in this browser on this device.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Player Totals</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Aces</th>
+                  <th>Serve Err</th>
+                  <th>Pass</th>
+                  <th>Pass Err</th>
+                  <th>Assists</th>
+                  <th>Kills</th>
+                  <th>Attack Err</th>
+                  <th>Digs</th>
+                  <th>Blocks</th>
+                  <th>Block Touch</th>
+                </tr>
+              </thead>
+              <tbody id="reportTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Clip Finder</h3>
+          <p class="small-note">
+            Tap a tagged play to jump the video back to that moment.
+          </p>
+          <div id="clipFinderList" class="event-log"></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="settings" class="tab-screen">
+        <div class="card">
+          <h2>Settings</h2>
+
+          <label class="label">Team Name</label>
+          <input id="teamNameInput" type="text" placeholder="Team name" />
+
+          <button id="saveTeamNameBtn" class="primary-btn">Save Team Name</button>
+        </div>
+
+        <div class="card danger-card">
+          <h3>Reset App</h3>
+          <p>
+            This clears roster, games, and tagged stats from this browser.
+          </p>
+          <button id="resetBtn" class="danger-btn">Reset VolleyVision</button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
