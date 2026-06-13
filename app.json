@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "VolleyVision",
+    "slug": "volleyvision",
+    "scheme": "volleyvision",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.joshlawrence.volleyvision",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "VolleyVision needs access to select volleyball game videos for stat tagging."
+      }
+    },
+    "android": {
+      "package": "com.joshlawrence.volleyvision",
+      "adaptiveIcon": {
+        "backgroundColor": "#111827"
+      }
+    },
+    "plugins": [
+      [
+        "expo-video",
+        {
+          "supportsPictureInPicture": true
+        }
+      ],
+      "expo-document-picker"
+    ]
+  }
+}
